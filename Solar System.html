@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System</title>
+    <style>
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            overflow: hidden;
+			    cursor: none; /* Hide the cursor for the entire body */
+
+			
+        }
+        .container {
+            font-size: 6px;
+            width: 40em;
+            height: 40em;
+            position: relative;
+            text-align: left; 
+        }
+        img {
+            height: 130%;
+            width: 130%;
+        }
+        .sun {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 15em;
+            left: 15em;
+            width: 10em;
+            height: 10em;
+            border-radius: 50%;
+            box-shadow: 0 0 3em rgb(255, 128, 0);
+            animation: orbit 50s linear infinite;
+			z-index: 100;
+        }
+        .planet {
+            position: absolute;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+            border-width: 0.1em 0.1em 0 0;
+            border-radius: 50%;
+            cursor: none;
+			width: 1rem;
+			height: 1rem;
+			z-index: 99;
+        }
+        /* Tooltip container and styling */
+        .tooltip {
+            position: fixed;
+            background-color: white;
+            color: black;
+            padding: 5px;
+            font-size: 17px;
+            border-radius: 5px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            visibility: hidden;  /* Hidden by default */
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Show tooltip on hover */
+        .planet:hover ~ .tooltip {
+            visibility: visible;
+        }
+
+        /* Planet specific CSS */
+        .mercury {
+            top: 12.5em;
+            left: 12.5em;
+            width: 15em;
+            height: 15em;
+            animation: orbit 68.7s linear infinite;
+        }
+        .venus {
+            top: 10em;
+            left: 10em;
+            width: 20em;
+            height: 20em;
+            animation: orbit 48.7s linear infinite;
+        }
+        .earth {
+            top: 6em;
+            left: 6em;
+            width: 28em;
+            height: 28em;
+            animation: orbit 36.5s linear infinite;
+        }
+        .moon {
+            top: 2em;
+            right: -1em;
+            width: 7em;
+            height: 7em;
+            animation: orbit 2.7s linear infinite;
+        }
+        .mars {
+            top: 2em;
+            left: 2.5em;
+            width: 36em;
+            height: 36em;
+            animation: orbit 26.5s linear infinite;
+        }
+        .jupiter {
+            top: -2em;
+            left: -2em;
+            width: 45em;
+            height: 45em;
+            animation: orbit 21s linear infinite;
+        }
+        .saturn {
+            top: -7em;
+            left: -7em;
+            width: 55em;
+            height: 55em;
+            animation: orbit 17s linear infinite;
+        }
+        .uranus {
+            top: -12em;
+            left: -12em;
+            width: 65em;
+            height: 65em;
+            animation: orbit 19s linear infinite;
+        }
+        .neptune {
+            top: -17em;
+            left: -17em;
+            width: 75em;
+            height: 75em;
+            animation: orbit 15s linear infinite;
+        }
+        .pluto {
+            top: -22em;
+            left: -22em;
+            width: 85em;
+            height: 85em;
+            animation: orbit 18s linear infinite;
+        }
+
+        /* Image before each planet */
+        .planet::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background-size: cover;
+        }
+        .mercury::before {
+            top: 1.5em;
+            right: 0.8em;
+            width: 2em;
+            height: 2em;
+            background-image: url('image/mercury.png');
+        }
+        .venus::before {
+            top: 2em;
+            right: 2em;
+            width: 2em;
+            height: 2em;
+            background-image: url('image/venus.png');
+        }
+        .earth::before {
+            top: 3em;
+            right: 0em;
+            width: 5em;
+            height: 5em;
+            background-image: url('image/earth.png');
+        }
+        .moon::before {
+            top: 0.8em;
+            right: 0.2em;
+            width: 1.2em;
+            height: 1.2em;
+            background-image: url('image/moon.png');
+        }
+        .mars::before {
+            top: 5em;
+            right: 3em;
+            width: 3em;
+            height: 3em;
+            background-image: url('image/mars.png');
+        }
+        .jupiter::before {
+            top: 6em;
+            right: 3em;
+            width: 5em;
+            height: 5em;
+            background-image: url('image/jupiter.png');
+        }
+        .saturn::before {
+            top: 7.5em;
+            right: 5em;
+            width: 4.5em;
+            height: 4.5em;
+            background-image: url('image/saturn.png');
+        }
+        .uranus::before {
+            top: 9em;
+            right: 6.5em;
+            width: 4em;
+            height: 4em;
+            background-image: url('image/uranus.png');
+        }
+        .neptune::before {
+            top: 10em;
+            right: 8em;
+            width: 4em;
+            height: 4em;
+            background-image: url('image/neptune.png');
+        }
+        .pluto::before {
+            top: 11em;
+            right: 10em;
+            width: 4em;
+            height: 4em;
+            background-image: url('image/pluto.png');
+        }
+
+        @keyframes orbit {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+	<style>
+	        	.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+
+.follower {
+    position: absolute; /* Allow it to be positioned anywhere */
+    pointer-events: none; /* Make it invisible to mouse events */
+    transition: transform 0.1s ease; /* Smooth movement */
+}
+
+.follower img {
+    width: 30px; /* Set the size of the image smaller */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Optional: ensures there's no gap below the image */
+}
+.fire {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 69, 0, 1) 0%, rgba(255, 165, 0, 0) 100%);
+    pointer-events: none; /* Prevent the div from blocking mouse events */
+    transition: transform 0.1s ease;
+    animation: flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+ audio {
+            display: none; /* Hide the audio player */
+        }
+	</style>
+</head>
+<body>
+  <div class="container">
+    
+<div class="planet pluto" data-description="Pluto" 
+     onmouseover="showTooltip('Pluto was once our solar system\'s ninth planet but has been reclassified as a dwarf planet. It\'s located in the Kuiper Belt.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet neptune" data-description="Neptune" 
+     onmouseover="showTooltip('Neptune is the eighth, and most distant planet from the Sun. It’s the fourth-largest, and the first planet discovered with math.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet uranus" data-description="Uranus" 
+     onmouseover="showTooltip('Uranus is the seventh planet from the Sun, and the third largest planet in our solar system. It appears to spin sideways.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet saturn" data-description="Saturn" 
+     onmouseover="showTooltip('Saturn is the sixth planet from the Sun, and the second largest in the solar system. It’s surrounded by beautiful rings.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet jupiter" data-description="Jupiter" 
+     onmouseover="showTooltip('Jupiter is the fifth planet from the Sun, and the largest in the solar system – more than twice as massive as the other planets combined.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet mars" data-description="Mars" 
+     onmouseover="showTooltip('Mars is the fourth planet from the Sun, and the seventh largest. It’s the only planet we know of inhabited entirely by robots.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet earth" data-description="Earth" 
+     onmouseover="showTooltip('Earth – our home planet – is the third planet from the Sun, and the fifth largest planet. It\'s the only place we know of inhabited by living things.')" 
+     onmouseout="hideTooltip()">
+     
+  <div class="planet moon" data-description="Moon" 
+       onmouseover="showTooltip('The Moon is tidally locked with Earth, which means that it spins on its axis exactly once each time it orbits our planet.')" 
+       onmouseout="hideTooltip()"></div>
+</div>
+
+<div class="planet venus" data-description="Venus" 
+     onmouseover="showTooltip('Venus is the second planet from the Sun, and the sixth largest planet. It’s the hottest planet in our solar system.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="planet mercury" data-description="Mercury" 
+     onmouseover="showTooltip('Mercury is the closest planet to the Sun, and the smallest planet in our solar system - only slightly larger than Earth\'s Moon.')" 
+     onmouseout="hideTooltip()"></div>
+
+<div class="sun">
+  <img src="image/sun.png" alt="Sun" data-description="Stars" 
+       onmouseover="showTooltip('Sun: From our vantage point on Earth, the Sun may appear like an unchanging source of light and heat in the sky. But the Sun is a dynamic star.')" 
+       onmouseout="hideTooltip()">
+</div>
+
+    <!-- Tooltip element -->
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+<div class="follower" id="follower">
+        <img src="https://media.tenor.com/QhRvvwpCdVoAAAAj/rocket.gif" alt="Follower Image">
+    </div>
+    <script>
+        // Get the audio element
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        // Variable to track whether audio has started playing
+        let audioStarted = false;
+
+        // Event listener for click to start audio
+        document.addEventListener('click', function() {
+            if (!audioStarted) {
+                audioPlayer.muted = false; // Unmute the audio
+                audioPlayer.play(); // Start playback
+                audioStarted = true; // Set the flag to true
+            }
+        });
+    </script>
+  <script>
+    // Tooltip functions
+    function showTooltip(text) {
+        const tooltip = document.getElementById("tooltip");
+        tooltip.textContent = text;
+        tooltip.style.visibility = "visible";
+    }
+
+    function hideTooltip() {
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.visibility = "hidden";
+    }
+	function createStars() {
+  const container = document.querySelector("body");
+  for (let i = 0; i < 1000; i++) {
+    // Increase the number of stars to 1000
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.width = ".1px";
+    star.style.height = ".1px";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.left = Math.random() * 100 + "%";
+    container.appendChild(star);
+  }
+}
+createStars();
+const follower = document.getElementById('follower');
+const img = follower.querySelector('img');
+let mouseX = 0, mouseY = 0;
+let followerX = 0, followerY = 0;
+
+// Track mouse movement
+document.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+});
+
+// Smoothly move the follower towards the mouse
+function updateFollower() {
+    followerX += (mouseX - followerX - img.width / 2) * 0.1;
+    followerY += (mouseY - followerY - img.height / 2) * 0.1;
+    
+    follower.style.left = `${followerX}px`;
+    follower.style.top = `${followerY}px`;
+
+    requestAnimationFrame(updateFollower);
+}
+
+updateFollower();
+
+  </script>
+</body>
+</html>
